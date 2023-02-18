@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply text-emerald-50;
+        @apply bg-slate-900;
+    }
+}
+
+html,
+body {
+    height: 100%;
+}
+
+#container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+}
+
+textarea,
+.rs-form-vertical .rs-form-group .rs-input-group,
+.rs-form-control-wrapper,
+.rs-form-control-wrapper > .rs-input,
+.rs-form-control-wrapper > .rs-input-number {
+    width: 100% !important;
+}

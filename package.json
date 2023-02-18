@@ -1,0 +1,46 @@
+{
+  "name": "listme",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@next/font": "13.1.6",
+    "@rsuite/icons": "^1.0.2",
+    "@types/node": "18.13.0",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "classnames": "^2.3.2",
+    "eslint": "8.34.0",
+    "eslint-config-next": "13.1.6",
+    "firebase": "^9.17.1",
+    "firebase-admin": "^11.5.0",
+    "formik": "^2.2.9",
+    "framer-motion": "^9.0.3",
+    "next": "13.1.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "rsuite": "^5.26.1",
+    "swr": "^2.0.3",
+    "typescript": "4.9.5",
+    "yup": "^1.0.0",
+    "zustand": "^4.3.3"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
+    "autoprefixer": "^10.4.13",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-config-standard-with-typescript": "^34.0.0",
+    "eslint-import-resolver-typescript": "^3.5.3",
+    "eslint-plugin-prettier": "^4.2.1",
+    "postcss": "^8.4.21",
+    "prettier": "^2.8.4",
+    "tailwindcss": "^3.2.6"
+  }
+}
