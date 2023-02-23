@@ -1,4 +1,5 @@
 import { List, ListContentItemInput, TListContentItem } from '@/common/models/list'
+import httpClient from '@/common/providers/httpClient'
 
 export async function addContentItemUseCase(
     id: string,
@@ -9,15 +10,11 @@ export async function addContentItemUseCase(
         content,
     }
 
-    const result = await fetch(`/api/list/content`, {
-        method: 'POST',
-        body: JSON.stringify(body),
+    const list = await httpClient.post<List>(`/api/list/content`, JSON.stringify(body), {
         headers: {
             'Content-Type': 'application/json',
         },
     })
-
-    const list = (await result.json()) as List
 
     return list
 }

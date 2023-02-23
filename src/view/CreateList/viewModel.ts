@@ -35,6 +35,7 @@ export interface CreateListViewModelHook {
 
 export const useCreateListViewModel = (): CreateListViewModelHook => {
     const { push } = useRouter()
+    const [image, handleChangeImage] = useState<File | null>(null)
 
     const onClickCreateList = async (result: CreateListForm) => {
         try {
@@ -46,7 +47,6 @@ export const useCreateListViewModel = (): CreateListViewModelHook => {
         }
     }
 
-    const [image, handleChangeImage] = useState<File | null>(null)
     const { errors, values, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
         initialValues: initialFormData,
         validationSchema,

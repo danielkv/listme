@@ -12,7 +12,7 @@ export interface ListInput {
 export interface List extends Omit<ListInput, 'image'> {
     id: string
     content: TListContentItem[]
-    image: string
+    image: string | null
 }
 
 export interface ListContentItemInput {

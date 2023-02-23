@@ -1,19 +1,14 @@
-import Image from 'next/image'
-import { Badge, Button, Form, Input, Loader } from 'rsuite'
-
+import { getListByIdUseCase } from '@/domain/useCases/list/getListById'
 import SingleListView from '@/view/SingleList'
-
-import ContentItems from './content-items'
-import { useSingleListViewModel } from './viewModel'
 
 export interface SingleListPageProps {
     params: { id: string }
 }
 
-export async function generateMetadata(...props) {
-    console.log('props', props)
+export async function generateMetadata({ params }: SingleListPageProps) {
+    const list = await getListByIdUseCase(params.id)
 
-    return { title: 'Testee1' }
+    return { title: list.name }
 }
 
 const SingleListPage = ({ params }: SingleListPageProps) => {

@@ -2,7 +2,7 @@ import { Fields, Files, IncomingForm } from 'formidable'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { BadRequestException, NotFoundException } from '@/common/exceptions'
-import { List } from '@/common/models/list'
+import { List, ListInput } from '@/common/models/list'
 import { db, storage } from '@/common/providers/firebase'
 import { withApiException } from '@/common/utils/withApiException'
 
@@ -44,24 +44,29 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
 
     const { fields, files } = await formParse(req)
 
-    const file = files.file
-    if (Array.isArray(file)) throw new BadRequestException('Multiple files are not supported')
-    const fileExtention = file.originalFilename?.split('.').pop()
-    if (!fileExtention) throw new BadRequestException('File not supported')
-    if (!file.mimetype) throw new BadRequestException('File type not supported')
-
-    const uploadResponse = await storage.upload(file.filepath, {
-        contentType: file.mimetype,
-        public: true,
-        destination: `${Date.now()}.${fileExtention}`,
-    })
-
-    const data = {
-        image: uploadResponse[0].publicUrl(),
+    const data: List = {
+        id: '__NEW__',
+        image: null,
         description: String(fields.description),
         maxSize: Number(fields.maxSize),
         name: String(fields.name),
         content: [],
+    }
+
+    const file = files?.file
+    if (file) {
+        if (Array.isArray(file)) throw new BadRequestException('Multiple files are not supported')
+        const fileExtention = file.originalFilename?.split('.').pop()
+        if (!fileExtention) throw new BadRequestException('File not supported')
+        if (!file.mimetype) throw new BadRequestException('File type not supported')
+
+        const uploadResponse = await storage.upload(file.filepath, {
+            contentType: file.mimetype,
+            public: true,
+            destination: `${Date.now()}.${fileExtention}`,
+        })
+
+        data.image = uploadResponse[0].publicUrl()
     }
 
     const response = await listsRef.add(data)
