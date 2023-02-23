@@ -1,17 +1,31 @@
 'use client'
 
-import { Button, Form, Input, InputNumber, Loader } from 'rsuite'
+import { Button, Form, Input, InputNumber, Loader, Uploader } from 'rsuite'
 
 import React from 'react'
+
+import ImageIcon from '@rsuite/icons/Image'
 
 import { useCreateListViewModel } from './viewModel'
 
 // eslint-disable-next-line react/display-name
 const Textarea = React.forwardRef((props, ref) => <Input {...props} as="textarea" />)
 
+export const metadata = {
+    title: 'Criar nova lista',
+}
+
 const CreateList: React.FC = () => {
-    const { isSubmitting, values, errors, handleBlur, handleChange, handleSubmitCreateList } =
-        useCreateListViewModel()
+    const {
+        isSubmitting,
+        values,
+        errors,
+        image,
+        handleChangeImage,
+        handleBlur,
+        handleChange,
+        handleSubmitCreateList,
+    } = useCreateListViewModel()
 
     return (
         <main className="flex flex-1 flex-col gap-5 items-center justify-center">
@@ -43,6 +57,14 @@ const CreateList: React.FC = () => {
                         errorMessage={errors.description}
                     />
                 </Form.Group>
+
+                <Input
+                    type="file"
+                    onChange={(_, e) => {
+                        const file = e.target.files?.[0] || null
+                        handleChangeImage(file)
+                    }}
+                />
 
                 <Form.Group>
                     <Form.ControlLabel>Máximo de participantes</Form.ControlLabel>

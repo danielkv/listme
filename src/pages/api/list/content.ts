@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 import { BadRequestException, NotFoundException } from '@/common/exceptions'
 import { List, ListContentItemInput } from '@/common/models/list'
-import { db } from '@/common/providers/firebaseAdmin'
+import { db } from '@/common/providers/firebase'
 import { withApiException } from '@/common/utils/withApiException'
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {

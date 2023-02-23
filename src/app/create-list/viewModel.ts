@@ -2,7 +2,7 @@ import { FormikErrors, useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
 import * as yup from 'yup'
 
-import { FocusEvent, FormEvent } from 'react'
+import { FocusEvent, FormEvent, useState } from 'react'
 
 import { createListUseCase } from '@/domain/useCases/list/create-list'
 
@@ -26,6 +26,8 @@ export interface CreateListViewModelHook {
     isSubmitting: boolean
     values: CreateListForm
     errors: FormikErrors<CreateListForm>
+    image: File | null
+    handleChangeImage: (file: File | null) => void
     handleSubmitCreateList: (e?: FormEvent<HTMLFormElement> | undefined) => void
     handleChange: (field: string) => (value: any) => void
     handleBlur: (e: FocusEvent<any, Element>) => void
@@ -36,7 +38,7 @@ export const useCreateListViewModel = (): CreateListViewModelHook => {
 
     const onClickCreateList = async (result: CreateListForm) => {
         try {
-            const response = await createListUseCase(result)
+            const response = await createListUseCase({ ...result, image })
 
             push(`/list/${response.id}`)
         } catch (err) {
@@ -44,6 +46,7 @@ export const useCreateListViewModel = (): CreateListViewModelHook => {
         }
     }
 
+    const [image, handleChangeImage] = useState<File | null>(null)
     const { errors, values, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
         initialValues: initialFormData,
         validationSchema,
@@ -54,6 +57,8 @@ export const useCreateListViewModel = (): CreateListViewModelHook => {
         isSubmitting,
         errors,
         values,
+        image,
+        handleChangeImage,
         handleChange: (field: string) => handleChange(field),
         handleBlur,
         handleSubmitCreateList: handleSubmit,
