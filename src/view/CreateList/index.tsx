@@ -81,8 +81,13 @@ const CreateListView: React.FC = () => {
                     </div>
                 </Form.Group>
 
-                <Button type="submit" appearance="primary" style={{ backgroundColor: '#26bea6' }}>
-                    {isSubmitting ? <Loader /> : 'Criar lista'}
+                <Button
+                    type="submit"
+                    appearance="primary"
+                    style={{ backgroundColor: '#26bea6' }}
+                    loading={isSubmitting}
+                >
+                    Criar lista
                 </Button>
             </Form>
         </main>

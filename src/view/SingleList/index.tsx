@@ -45,7 +45,7 @@ const SingleListView: React.FC<SingleListProps> = ({ id }) => {
     return (
         <div className="flex flex-col flex-1">
             <header className="bg-slate-500 py-6 mb-6">
-                <div className="container mx-auto max-w-lg min-h-[300px]">
+                <div className="container mx-auto max-w-lg">
                     {list.image && (
                         <Image
                             width={500}

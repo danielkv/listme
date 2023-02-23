@@ -2,7 +2,9 @@ import useSWR from 'swr'
 
 import { FormEvent, RefObject, useRef, useState } from 'react'
 
+import { useNotification } from '@/common/hooks/useNotification'
 import { List, TListContentItem } from '@/common/models/list'
+import { getErrorMessage } from '@/common/utils/getErrorMessage'
 import { addContentItemUseCase } from '@/domain/useCases/list/addContentItem'
 import { getListByIdUseCase } from '@/domain/useCases/list/getListById'
 
@@ -26,6 +28,7 @@ export const useSingleListViewModel = ({
 }: SingleListViewModelArgs): singleListViewModelHook => {
     const [newContentItem, handleChangeNewContentItem] = useState('')
     const [loadingAdd, setLoadingAdd] = useState(false)
+    const notification = useNotification()
 
     const newContentInputRef = useRef<HTMLInputElement>(null)
 
@@ -48,12 +51,14 @@ export const useSingleListViewModel = ({
 
             handleChangeNewContentItem('')
 
+            notification.push('Adicionado com sucesso', 'success')
+
             setTimeout(() => {
                 newContentInputRef.current?.select()
                 newContentInputRef.current?.focus()
             }, 500)
         } catch (err) {
-            console.log((err as Error).message)
+            notification.push(getErrorMessage(err), 'error')
         } finally {
             setLoadingAdd(false)
         }

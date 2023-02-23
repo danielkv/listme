@@ -1,3 +1,5 @@
+import { ApiError } from 'next/dist/server/api-utils'
+
 export class HttpClient {
     readonly config: RequestInit = {}
     readonly baseURL = process.env.NEXT_PUBLIC_BASE_API_URL
@@ -10,6 +12,12 @@ export class HttpClient {
 
     private async go<T>(path: string, config?: RequestInit): Promise<T> {
         const response = await fetch(`${this.baseURL}${path}`, this.extendConfig(config))
+
+        if (!response.ok) {
+            const errData = await response.json()
+            throw new ApiError(errData.statusCode, errData.message)
+        }
+
         const result = await response.json()
 
         return result as T

@@ -17,8 +17,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const result = await listsRef.get()
     const oldData = result.data() as List
     const oldContent = oldData.content || []
-    if (oldContent.length + newContent.length > oldData.maxSize)
-        throw new Error('List já atingiu o máximo de participantes')
+    if (oldData.maxSize > 0 && oldContent.length + newContent.length > oldData.maxSize)
+        throw new Error('A lista já atingiu o máximo de participantes')
 
     const newData = {
         ...oldData,

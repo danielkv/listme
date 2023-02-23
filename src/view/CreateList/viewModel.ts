@@ -4,6 +4,8 @@ import * as yup from 'yup'
 
 import { FocusEvent, FormEvent, useState } from 'react'
 
+import { useNotification } from '@/common/hooks/useNotification'
+import { getErrorMessage } from '@/common/utils/getErrorMessage'
 import { createListUseCase } from '@/domain/useCases/list/create-list'
 
 import { CreateListForm } from './types'
@@ -36,6 +38,7 @@ export interface CreateListViewModelHook {
 export const useCreateListViewModel = (): CreateListViewModelHook => {
     const { push } = useRouter()
     const [image, handleChangeImage] = useState<File | null>(null)
+    const notification = useNotification()
 
     const onClickCreateList = async (result: CreateListForm) => {
         try {
@@ -43,7 +46,7 @@ export const useCreateListViewModel = (): CreateListViewModelHook => {
 
             push(`/list/${response.id}`)
         } catch (err) {
-            console.log(err)
+            notification.push(getErrorMessage(err), 'error')
         }
     }
 
